@@ -1,4 +1,4 @@
-from hub import light_matrix, port, motion_sensor
+from hub import light_matrix, port, motion_sensor, button
 import motor
 import motor_pair
 import runloop
@@ -9,9 +9,35 @@ LEFT_ATTACHMENT = port.D
 RIGHT_ATTACHMENT = port.C
 
 async def main():
-    robot = Biofish()
-    await robot.drive_forward(50)
+    # program_number = 0
+    # wait until left or right button is pressed
+    # if right, program_number is program_number + 1
+    # update display to show symbol for program_number
 
+    robot = Biofish()
+    robot.reset_angle()
+ 
+    PROGRAM_NUMBER = 1
+    if PROGRAM_NUMBER == 1:
+        await lidar_scan(robot)
+    elif PROGRAM_NUMBER == 2:
+        await tractor()
+
+async def newmain():
+    print("hi")
+    program_number = 0
+    # wait until left or right button is pressed
+    # if right, program_number is program_number + 1
+    # update display to show symbol for program_number
+
+
+async def lidar_scan(robot):
+    await robot.drive_backward(66, speed = 40)
+    await robot.turn_left(35, speed = 40)
+    #await robot.drive_backward(1.5, speed = 40)
+    #await robot.turn_left(15, speed = 40)
+    await robot.turn_right(40)
+    await robot.drive_forward(76)
 
 class Biofish:
     def __init__(self):
