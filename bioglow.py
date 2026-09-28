@@ -3,18 +3,22 @@ import motor
 import motor_pair
 import runloop
 
+SPEED = 70
+
+LEFT_ATTACHMENT = port.D
+RIGHT_ATTACHMENT = port.C
+
 async def main():
     robot = Biofish()
     await robot.drive_forward(50)
 
-WHEEL = 18 # circumference in cm
 
 class Biofish:
     def __init__(self):
-        self.wheel_diameter = 5.5 # cm
+        self.wheel_circumference = 18 # cm
         # driving motors
-        self.left_motor = port.C
-        self.right_motor = port.B
+        self.left_motor = port.A
+        self.right_motor = port.E
         self.motor_pair = motor_pair.PAIR_1
         motor_pair.pair(self.motor_pair, self.left_motor, self.right_motor)
 
@@ -22,16 +26,16 @@ class Biofish:
         print("current angle: {} / angle goal: {}".format(self.get_yaw(), self.angle_goal))
 
     async def simple_drive_backward(self, distance, speed = SPEED):
-        distance_in_degrees = int(distance * (360.0 / (self.wheel_diameter * math.pi)))
+        distance_in_degrees = int(distance * (360.0 / (self.wheel_circumference)))
         await motor_pair.move_for_degrees(self.motor_pair, -distance_in_degrees, 0, velocity = speed*10)
 
     # drive_forward tells the robot to drive in a
     # straight line "distance" centimeters forwards.
     async def drive_forward(self, distance, speed = SPEED):
-        distance_in_degrees = distance * (360.0 / (self.wheel_diameter * math.pi))
+        distance_in_degrees = distance * (360.0 / (self.wheel_circumference))
         start_position = motor.relative_position(self.right_motor)
         goal_position = start_position + distance_in_degrees
-        small_goal = goal_position - 7 * (360.0 / (self.wheel_diameter * math.pi))
+        small_goal = goal_position - 7 * (360.0 / (self.wheel_circumference))
         while motor.relative_position(self.right_motor) < small_goal:
             motor_pair.move(self.motor_pair, self.correction(),velocity = speed*10)
         while motor.relative_position(self.right_motor) < goal_position:
@@ -40,11 +44,11 @@ class Biofish:
 
     async def drive_backward(self, distance, speed = SPEED):
         # convert distance (centimeters) to degrees
-        distance_in_degrees = distance * (360.0 / (self.wheel_diameter * math.pi))
+        distance_in_degrees = distance * (360.0 / (self.wheel_circumference))
         start_position = motor.relative_position(self.right_motor)
         goal_position = start_position - distance_in_degrees
         # plus sign before the seven used to be a minus sign
-        small_goal = goal_position + 7 * (360.0 / (self.wheel_diameter * math.pi))
+        small_goal = goal_position + 7 * (360.0 / (self.wheel_circumference))
         while motor.relative_position(self.right_motor) > small_goal:
             motor_pair.move(self.motor_pair, -self.correction(),velocity = -speed*10)
         while motor.relative_position(self.right_motor) > goal_position:
