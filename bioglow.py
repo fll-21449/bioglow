@@ -21,7 +21,7 @@ async def main():
     if PROGRAM_NUMBER == 1:
         await lidar_scan(robot)
     elif PROGRAM_NUMBER == 2:
-        await tractor()
+        await tractor(robot)
 
 async def newmain():
     print("hi")
@@ -32,12 +32,21 @@ async def newmain():
 
 
 async def lidar_scan(robot):
-    await robot.drive_backward(66, speed = 40)
+    await robot.drive_backward(67.6, speed = 40)
     await robot.turn_left(35, speed = 40)
-    #await robot.drive_backward(1.5, speed = 40)
-    #await robot.turn_left(15, speed = 40)
-    await robot.turn_right(40)
-    await robot.drive_forward(76)
+    await robot.turn_right(33)
+    await robot.drive_forward(70)
+
+async def tractor(robot):
+    await robot.drive_forward(41, speed = 40)
+    await motor.run_for_time(LEFT_ATTACHMENT, 500, -1110)
+
+async def forklift(robot):
+    await robot.drive_forward(1)
+    await robot.turn_right(45)
+    await robot.drive_forward(1)
+    await robot.drive_backward(1)
+    # todo
 
 class Biofish:
     def __init__(self):
