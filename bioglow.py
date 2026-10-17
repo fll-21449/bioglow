@@ -17,7 +17,7 @@ async def main():
     robot = Biofish()
     robot.reset_angle()
  
-    PROGRAM_NUMBER = 1
+    PROGRAM_NUMBER = 2
     if PROGRAM_NUMBER == 1:
         await lidar_scan(robot)
     elif PROGRAM_NUMBER == 2:
@@ -38,8 +38,12 @@ async def lidar_scan(robot):
     await robot.drive_forward(70)
 
 async def tractor(robot):
-    await robot.drive_forward(41, speed = 40)
-    await motor.run_for_time(LEFT_ATTACHMENT, 500, -1110)
+    await motor.run_for_time(LEFT_ATTACHMENT, 200, 500)
+    await motor.run_for_time(LEFT_ATTACHMENT, 250, -1100)
+    await robot.drive_forward(39, speed = 1100)
+    #await robot.drive_backward(1.5, speed = 100)
+    await motor.run_for_time(LEFT_ATTACHMENT, 600, 110)
+    await motor.run_for_time(LEFT_ATTACHMENT, 1000, -110)
 
 async def forklift(robot):
     await robot.drive_forward(1)
