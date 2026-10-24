@@ -14,11 +14,40 @@
 #     await motor_pair.move_for_degrees(motor_pair.PAIR_1, distance, steering, velocity = velocity)
 # runloop.run(main())
 
-from hub import port
+from hub import motion_sensor, port
 import runloop
 import color_sensor
 import motor_pair
+
+
+
+
+
+
+
 async def main():
+    count = motion_sensor.tap_count()
+    while True:
+        newcount = motion_sensor.tap_count()
+        if newcount > count:
+            print("tap count = {}".format(newcount))
+            count = newcount
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+async def oldmain():
         mid = 71 # change this to be halfway between white and black.
         motor_pair.pair(motor_pair. PAIR_1, port.A, port.E)
         for i in range(100):
