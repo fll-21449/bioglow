@@ -42,12 +42,15 @@ async def lidar_scan(robot):
     #await robot.drive_forward(70)
 
 async def tractor(robot):
-    await motor.run_for_time(LEFT_ATTACHMENT, 200, 500)
-    await motor.run_for_time(LEFT_ATTACHMENT, 250, -1100)
+    await motor.run_for_time(LEFT_ATTACHMENT, 300, -700)
+    await motor.run_for_time(LEFT_ATTACHMENT, 610, 500)
     await robot.drive_forward(39, speed = 1100)
     #await robot.drive_backward(1.5, speed = 100)
     await motor.run_for_time(LEFT_ATTACHMENT, 600, 110)
-    await motor.run_for_time(LEFT_ATTACHMENT, 1000, -110)
+    await motor.run_for_time(LEFT_ATTACHMENT, 800, -110)
+    await runloop.sleep_ms(1000)
+    await motor.run_for_time(LEFT_ATTACHMENT, 500, 200)
+    await robot.drive_backward(39)
 
 async def forklift(robot):
     await robot.drive_forward(1)
