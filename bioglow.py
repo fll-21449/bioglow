@@ -16,7 +16,7 @@ async def main():
 
     robot = Biofish()
     robot.reset_angle()
- 
+
     PROGRAM_NUMBER = 2
     if PROGRAM_NUMBER == 1:
         await lidar_scan(robot)
