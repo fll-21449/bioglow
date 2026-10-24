@@ -3,6 +3,7 @@ import motor
 import motor_pair
 import runloop
 
+
 SPEED = 70
 
 LEFT_ATTACHMENT = port.D
@@ -17,12 +18,15 @@ async def main():
     robot = Biofish()
     robot.reset_angle()
 
-    PROGRAM_NUMBER = 2
+    # Make sure this matches the program number in the bottom right.
+    PROGRAM_NUMBER = 1
+
     if PROGRAM_NUMBER == 1:
         await lidar_scan(robot)
     elif PROGRAM_NUMBER == 2:
         await tractor(robot)
-
+    elif PROGRAM_NUMBER == 3:
+        await keystone(robot)
 async def newmain():
     print("hi")
     program_number = 0
@@ -32,10 +36,10 @@ async def newmain():
 
 
 async def lidar_scan(robot):
-    await robot.drive_backward(67.6, speed = 40)
-    await robot.turn_left(35, speed = 40)
-    await robot.turn_right(33)
-    await robot.drive_forward(70)
+    await robot.drive_backward(62, speed = 40)# 67.6
+    await robot.turn_left(40, speed = 500, small_goal_diff=-10) # 35 degrees
+    #await robot.turn_right(33)
+    #await robot.drive_forward(70)
 
 async def tractor(robot):
     await motor.run_for_time(LEFT_ATTACHMENT, 200, 500)
@@ -51,6 +55,20 @@ async def forklift(robot):
     await robot.drive_forward(1)
     await robot.drive_backward(1)
     # todo
+
+async def keystone(robot):
+    await robot.drive_forward(45)
+    await robot.turn_left(40)
+    await robot.drive_forward(25)
+    await robot.turn_right(90)
+    await robot.drive_forward(32)
+    await motor.run_for_time(RIGHT_ATTACHMENT, 1000, -110)
+    await robot.drive_backward(32)
+    await robot.turn_right(45)
+    motor.run_for_time(LEFT_ATTACHMENT, 2000, -110)
+    await motor.run_for_time(LEFT_ATTACHMENT, 2000, 110)
+
+    await robot.drive_forward(30)
 
 class Biofish:
     def __init__(self):
@@ -94,11 +112,11 @@ class Biofish:
             motor_pair.move(self.motor_pair, -self.correction(),velocity = -100)
         motor_pair.stop(self.motor_pair)
 
-    async def turn_left(self, degrees, speed = 25):
+    async def turn_left(self, degrees, speed = 25, small_goal_diff=20):
         if speed>50:
             speed = 50
         self.angle_goal = self.angle_goal + degrees
-        small_goal = self.angle_goal - 20
+        small_goal = self.angle_goal - small_goal_diff
         motor_pair.move_tank(self.motor_pair, -speed*10, speed*10)
         while self.get_yaw()<small_goal:
             # wait
