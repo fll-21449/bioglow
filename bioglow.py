@@ -19,14 +19,20 @@ async def main():
     robot.reset_angle()
 
     # Make sure this matches the program number in the bottom right.
-    PROGRAM_NUMBER = 3
+    PROGRAM_NUMBER = 4
+    await runsel(PROGRAM_NUMBER, robot)
 
-    if PROGRAM_NUMBER == 1:
+async def runsel(sel, robot):
+    if sel == 1:
         await lidar_scan(robot)
-    elif PROGRAM_NUMBER == 2:
+    elif sel == 2:
         await tractor(robot)
-    elif PROGRAM_NUMBER == 3:
+    elif sel == 3:
         await keystone(robot)
+    elif sel == 4:
+        await buzzcut(robot)
+
+
 async def newmain():
     print("hi")
     program_number = 0
@@ -36,10 +42,10 @@ async def newmain():
 
 
 async def lidar_scan(robot):
-    await robot.drive_backward(62, speed = 40)# 67.6
-    await robot.turn_left(40, speed = 500, small_goal_diff=-10) # 35 degrees
-    #await robot.turn_right(33)
-    #await robot.drive_forward(70)
+    await robot.drive_backward(66, speed = 40)# 67.6 #62
+    await robot.turn_left(35, speed = 500, small_goal_diff=-10) # 35 degrees #40, speed = 500, small_goal_diff=-10
+    await robot.turn_right(35)
+    await robot.drive_forward(66)
 
 async def tractor(robot):
     await motor.run_for_time(LEFT_ATTACHMENT, 300, -700)
@@ -52,12 +58,15 @@ async def tractor(robot):
     await motor.run_for_time(LEFT_ATTACHMENT, 500, 200)
     await robot.drive_backward(39)
 
-async def forklift(robot):
-    await robot.drive_forward(1)
-    await robot.turn_right(45)
-    await robot.drive_forward(1)
-    await robot.drive_backward(1)
-    # todo
+async def buzzcut(robot):
+    await robot.drive_forward(29)
+    await robot.turn_right(48)
+    await robot.drive_forward(62)
+    await robot.turn_left(46)
+    await robot.drive_forward(2.5)
+    await motor.run_for_time(RIGHT_ATTACHMENT, 500, -1100)
+    #await motor.run_for_time(RIGHT_ATTACHMENT, 500, 1100)
+    await robot.backwards(20)
 
 async def keystone(robot):
     await robot.drive_forward(45)
