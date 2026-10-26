@@ -19,7 +19,7 @@ async def main():
     robot.reset_angle()
 
     # Make sure this matches the program number in the bottom right.
-    PROGRAM_NUMBER = 1
+    PROGRAM_NUMBER = 3
 
     if PROGRAM_NUMBER == 1:
         await lidar_scan(robot)
@@ -66,12 +66,34 @@ async def keystone(robot):
     await robot.turn_right(90)
     await robot.drive_forward(32)
     await motor.run_for_time(RIGHT_ATTACHMENT, 1000, -110)
-    await robot.drive_backward(32)
+    await robot.drive_backward(30)
     await robot.turn_right(45)
     motor.run_for_time(LEFT_ATTACHMENT, 2000, -110)
+    await robot.drive_forward(30.2)
     await motor.run_for_time(LEFT_ATTACHMENT, 2000, 110)
-
-    await robot.drive_forward(30)
+    await motor.run_for_time(LEFT_ATTACHMENT, 1000, -110)
+    await robot.drive_backward(21.5)
+    await robot.turn_left(92)
+    await motor.run_for_time(LEFT_ATTACHMENT, 150, 110)
+    await robot.drive_forward(8)
+    await motor.run_for_time(LEFT_ATTACHMENT, 2000, 110)
+    await robot.drive_backward(12)
+    await robot.turn_left(70)
+    await robot.drive_forward(38)
+    await robot.turn_right(120)
+    await robot.drive_forward(23, speed = 20)
+    await robot.drive_backward(20)
+    motor.run_for_time(LEFT_ATTACHMENT, 2000, -110)
+    await robot.turn_left(98)
+    await robot.drive_backward(20)
+    await robot.drive_forward(28)
+    await robot.turn_left(45)
+    await robot.drive_forward(31)
+    await robot.turn_left(30)
+    motor.run_for_time(LEFT_ATTACHMENT, 1000, 110)
+    await robot.drive_forward(70)
+    await robot.turn_left(30)
+    await robot.drive_forward(40)
 
 class Biofish:
     def __init__(self):
