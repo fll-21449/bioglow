@@ -19,7 +19,7 @@ async def main():
     robot.reset_angle()
 
     # Make sure this matches the program number in the bottom right.
-    PROGRAM_NUMBER = 3
+    PROGRAM_NUMBER = 2
 
     if PROGRAM_NUMBER == 1:
         await lidar_scan(robot)
@@ -27,6 +27,8 @@ async def main():
         await tractor(robot)
     elif PROGRAM_NUMBER == 3:
         await keystone(robot)
+    elif PROGRAM_NUMBER == 4:
+        await forklift(robot)
 async def newmain():
     print("hi")
     program_number = 0
@@ -42,11 +44,9 @@ async def lidar_scan(robot):
     #await robot.drive_forward(70)
 
 async def tractor(robot):
-    await motor.run_for_time(LEFT_ATTACHMENT, 300, -700)
-    await motor.run_for_time(LEFT_ATTACHMENT, 610, 500)
-    await robot.drive_forward(39, speed = 1100)
+    await motor.run_for_time(LEFT_ATTACHMENT, 200, 700)
+    await robot.drive_forward(42, speed = 1100)
     #await robot.drive_backward(1.5, speed = 100)
-    await motor.run_for_time(LEFT_ATTACHMENT, 600, 110)
     await motor.run_for_time(LEFT_ATTACHMENT, 800, -110)
     await runloop.sleep_ms(1000)
     await motor.run_for_time(LEFT_ATTACHMENT, 500, 200)
