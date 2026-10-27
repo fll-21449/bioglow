@@ -34,12 +34,23 @@ async def runsel(program_number, robot):
     elif program_number == 5:
         await forklift(robot)
 
-async def newmain():
-    print("hi")
-    program_number = 0
-    # wait until left or right button is pressed
-    # if right, program_number is program_number + 1
-    # update display to show symbol for program_number
+def newmain():
+    sel = 1
+    # Infinite loop
+    while True:
+        # Show current selection
+        pixels = [0] * 25
+        pixels[sel] = [100]
+        light_matrix.show(pixels)
+        # Wait for button press
+        while True:
+            if button.pressed(button.LEFT):
+                sel = sel - 1
+                break
+            if button.pressed(button.RIGHT):
+                await runsel(sel)
+                sel = sel + 1
+                break
 
 async def lidar_scan(robot):
     await robot.drive_backward(66, speed = 40)# 67.6 #62
