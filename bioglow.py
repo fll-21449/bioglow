@@ -22,16 +22,17 @@ async def main():
     PROGRAM_NUMBER = 4
     await runsel(PROGRAM_NUMBER, robot)
 
-async def runsel(sel, robot):
-    if sel == 1:
+async def runsel(program_number, robot):
+    if program_number == 1:
         await lidar_scan(robot)
-    elif sel == 2:
+    elif program_number == 2:
         await tractor(robot)
-    elif sel == 3:
+    elif program_number == 3:
         await keystone(robot)
-    elif sel == 4:
+    elif program_number == 4:
         await buzzcut(robot)
-
+    elif program_number == 5:
+        await forklift(robot)
 
 async def newmain():
     print("hi")
@@ -40,7 +41,6 @@ async def newmain():
     # if right, program_number is program_number + 1
     # update display to show symbol for program_number
 
-
 async def lidar_scan(robot):
     await robot.drive_backward(66, speed = 40)# 67.6 #62
     await robot.turn_left(35, speed = 500, small_goal_diff=-10) # 35 degrees #40, speed = 500, small_goal_diff=-10
@@ -48,11 +48,9 @@ async def lidar_scan(robot):
     await robot.drive_forward(66)
 
 async def tractor(robot):
-    await motor.run_for_time(LEFT_ATTACHMENT, 300, -700)
-    await motor.run_for_time(LEFT_ATTACHMENT, 610, 500)
-    await robot.drive_forward(39, speed = 1100)
+    await motor.run_for_time(LEFT_ATTACHMENT, 200, 700)
+    await robot.drive_forward(42, speed = 1100)
     #await robot.drive_backward(1.5, speed = 100)
-    await motor.run_for_time(LEFT_ATTACHMENT, 600, 110)
     await motor.run_for_time(LEFT_ATTACHMENT, 800, -110)
     await runloop.sleep_ms(1000)
     await motor.run_for_time(LEFT_ATTACHMENT, 500, 200)
