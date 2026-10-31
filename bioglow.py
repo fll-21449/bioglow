@@ -24,7 +24,7 @@ async def main():
         await newmain(robot)
     else:
         # Make sure this matches the program number in the bottom right.
-        PROGRAM_NUMBER = 1
+        PROGRAM_NUMBER = 3
         await runsel(PROGRAM_NUMBER, robot)
 
 async def runsel(program_number, robot):
@@ -89,6 +89,14 @@ async def buzzcut(robot):
     await motor.run_for_time(RIGHT_ATTACHMENT, 500, -1100)
     #await motor.run_for_time(RIGHT_ATTACHMENT, 500, 1100)
     await robot.backwards(20)
+
+async def forklift(robot):
+    await robot.drive_forward(35)
+    await robot.turn_right(50)
+    await robot.drive_forward(60)
+    await robot.turn_left(50)
+    await robot.drive_forward(1.5)
+    await motor.run_for_time(RIGHT_ATTACHMENT, 1000, -700)
 
 async def keystone(robot):
     await robot.drive_forward(45)
