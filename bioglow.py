@@ -18,9 +18,14 @@ async def main():
     robot = Biofish()
     robot.reset_angle()
 
-    # Make sure this matches the program number in the bottom right.
-    PROGRAM_NUMBER = 4
-    await runsel(PROGRAM_NUMBER, robot)
+    use_newmain = False
+
+    if use_newmain:
+        await newmain(robot)
+    else:
+        # Make sure this matches the program number in the bottom right.
+        PROGRAM_NUMBER = 1
+        await runsel(PROGRAM_NUMBER, robot)
 
 async def runsel(program_number, robot):
     if program_number == 1:
@@ -34,13 +39,13 @@ async def runsel(program_number, robot):
     elif program_number == 5:
         await forklift(robot)
 
-def newmain():
+async def newmain(robot):
     sel = 1
     # Infinite loop
     while True:
         # Show current selection
         pixels = [0] * 25
-        pixels[sel] = [100]
+        pixels[sel] = 100
         light_matrix.show(pixels)
         # Wait for button press
         while True:
@@ -48,15 +53,23 @@ def newmain():
                 sel = sel - 1
                 break
             if button.pressed(button.RIGHT):
-                await runsel(sel)
+                await runsel(sel, robot)
                 sel = sel + 1
                 break
 
 async def lidar_scan(robot):
-    await robot.drive_backward(66, speed = 40)# 67.6 #62
-    await robot.turn_left(35, speed = 500, small_goal_diff=-10) # 35 degrees #40, speed = 500, small_goal_diff=-10
-    await robot.turn_right(35)
-    await robot.drive_forward(66)
+    await robot.drive_backward(68.5, speed = 40)
+    await robot.turn_left(30, small_goal_diff=5)
+    await robot.turn_right(25)
+    await robot.drive_forward(69)
+    #wait_4_button(button.LEFT)
+    #await robot.turn_right(5)
+    #await robot.turn_left(10, small_goal_diff=5)
+
+    #await robot.drive_backward(66, speed = 40)# 67.6 #62
+    #await robot.turn_left(35, speed = 500, small_goal_diff=-10) # 35 degrees #40, speed = 500, small_goal_diff=-10
+    #await robot.turn_right(35)
+    #await robot.drive_forward(66)
 
 async def tractor(robot):
     await motor.run_for_time(LEFT_ATTACHMENT, 200, 700)
@@ -112,6 +125,12 @@ async def keystone(robot):
     await robot.drive_forward(70)
     await robot.turn_left(30)
     await robot.drive_forward(40)
+
+def wait_4_button(b):
+    while True:
+        if button.pressed(b):
+            return
+
 
 class Biofish:
     def __init__(self):
