@@ -36,18 +36,16 @@ Here's how we usually use this at meetings.
       of conflicts: resolve the conflicts, commit the result, run `git checkout
       main`, then run `maint/merge.sh` again.
 
-    - Copy the merged program into the app.
-
 	- `maint/ff.sh` updates this computer's `programs-$host` branch to
 	  match the combined `programs` branch. This only works if `programs`
-          includes all of the commits from `programs-$host`.
+      includes all of the commits from `programs-$host`.
 
 	- `./diff.sh` shows a reverse diff of the changes we're about to apply.
 	  Make sure that the `-` lines look like what you expect to be bringing
-          in from the other computer(s).
+      in from the other computer(s).
 
-	- `git show programs-$host:bioglow.py | pbcopy` and then paste into the
-	  app. Run `./diff.sh`, there should be no differences.  If there are,
-	  they are most likely just whitespace differences. (The app strips out
-	  some meaningless whitespace when you paste into it.) I usually add
-          the extra whitespace so that the diff is clean.
+    - `maint/copy.sh` and then paste into the app. Run `./diff.sh`, there
+      should be no differences. If there are, they are most likely just
+      whitespace differences. (The app strips out some meaningless whitespace
+      when you paste into it.) I usually add the extra whitespace so that the
+      diff is clean.
