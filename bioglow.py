@@ -29,12 +29,12 @@ async def main():
 
 async def runsel(program_number, robot):
     if program_number == 1:
-        await lidar_scan(robot)
-    elif program_number == 2:
         await tractor(robot)
-    elif program_number == 3:
+    elif program_number == 2:
         await keystone(robot)
     elif program_number == 4:
+        await lidar_scan(robot)
+    elif program_number == 3:
         await buzzcut(robot)
     elif program_number == 5:
         await forklift(robot)
@@ -58,10 +58,19 @@ async def newmain(robot):
                 break
 
 async def lidar_scan(robot):
-    await robot.drive_backward(68.5, speed = 40)
-    await robot.turn_left(30, small_goal_diff=5)
-    await robot.turn_right(25)
-    await robot.drive_forward(69)
+    await robot.drive_backward(68, speed = 40) #78
+    #await robot.turn_left(30, small_goal_diff=5)
+    #await robot.turn_right(30)
+    await robot.drive_forward(6)
+    await robot.turn_left(60)
+    await robot.drive_backward(15)
+    await robot.turn_left(43.5)
+    await robot.drive_backward(8)
+    await motor.run_for_time(RIGHT_ATTACHMENT, 500, -1100)
+    await motor.run_for_time(LEFT_ATTACHMENT, 500, -700)
+    await robot.turn_right(75)
+    await robot.drive_forward(80)
+    #await robot.drive_forward(75) #80
     #wait_4_button(button.LEFT)
     #await robot.turn_right(5)
     #await robot.turn_left(10, small_goal_diff=5)
@@ -75,20 +84,23 @@ async def tractor(robot):
     await motor.run_for_time(LEFT_ATTACHMENT, 200, 700)
     await robot.drive_forward(42, speed = 1100)
     #await robot.drive_backward(1.5, speed = 100)
-    await motor.run_for_time(LEFT_ATTACHMENT, 800, -110)
+    await robot.drive_backward(1)
+    await motor.run_for_time(LEFT_ATTACHMENT, 1000, -110)
     await runloop.sleep_ms(1000)
     await motor.run_for_time(LEFT_ATTACHMENT, 500, 200)
-    await robot.drive_backward(39)
+    await robot.drive_backward(60)
 
 async def buzzcut(robot):
     await robot.drive_forward(29)
     await robot.turn_right(48)
     await robot.drive_forward(62)
-    await robot.turn_left(46)
-    await robot.drive_forward(2.5)
+    await robot.turn_left(49)
+    await robot.drive_forward(0.5)
     await motor.run_for_time(RIGHT_ATTACHMENT, 500, -1100)
-    #await motor.run_for_time(RIGHT_ATTACHMENT, 500, 1100)
-    await robot.backwards(20)
+    await robot.drive_backward(10)
+    await robot.turn_right(49)
+    await robot.drive_backward(90)
+    
 
 async def forklift(robot):
     await robot.drive_forward(35)
@@ -113,7 +125,7 @@ async def keystone(robot):
     await motor.run_for_time(LEFT_ATTACHMENT, 1000, -110)
     await robot.drive_backward(21.5)
     await robot.turn_left(92)
-    await motor.run_for_time(LEFT_ATTACHMENT, 150, 110)
+    await motor.run_for_time(LEFT_ATTACHMENT, 200, 110)
     await robot.drive_forward(8)
     await motor.run_for_time(LEFT_ATTACHMENT, 2000, 110)
     await robot.drive_backward(12)
