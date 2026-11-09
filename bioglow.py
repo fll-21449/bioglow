@@ -3,6 +3,7 @@ import motor
 import motor_pair
 import runloop
 
+#f54 ra200 ra-200 b54
 
 SPEED = 70
 
@@ -24,7 +25,7 @@ async def main():
         await newmain(robot)
     else:
         # Make sure this matches the program number in the bottom right.
-        PROGRAM_NUMBER = 3
+        PROGRAM_NUMBER = 4
         await runsel(PROGRAM_NUMBER, robot)
 
 async def runsel(program_number, robot):
@@ -37,7 +38,7 @@ async def runsel(program_number, robot):
     elif program_number == 3:
         await buzzcut(robot)
     elif program_number == 5:
-        await forklift(robot)
+        await popping_seeds_backup(robot)
 
 async def newmain(robot):
     sel = 1
@@ -94,8 +95,8 @@ async def buzzcut(robot):
     await robot.drive_forward(29)
     await robot.turn_right(48)
     await robot.drive_forward(62)
-    await robot.turn_left(49)
-    await robot.drive_forward(0.5)
+    await robot.turn_left(48)
+    await robot.drive_forward(2.5)
     await motor.run_for_time(RIGHT_ATTACHMENT, 500, -1100)
     await robot.drive_backward(10)
     await robot.turn_right(49)
