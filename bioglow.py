@@ -59,10 +59,10 @@ async def newmain(robot):
                 break
 
 async def lidar_scan(robot):
-    await robot.drive_backward(68, speed = 40) #78
+    await robot.drive_backward(75, speed = 40) 
     #await robot.turn_left(30, small_goal_diff=5)
     #await robot.turn_right(30)
-    await robot.drive_forward(6)
+    await robot.drive_forward(23) #6
     await robot.turn_left(60)
     await robot.drive_backward(15)
     await robot.turn_left(43.5)
@@ -83,7 +83,7 @@ async def lidar_scan(robot):
 
 async def tractor(robot):
     await motor.run_for_time(LEFT_ATTACHMENT, 200, 700)
-    await robot.drive_forward(42, speed = 1100)
+    await robot.drive_forward(40, speed = 1100) #42
     #await robot.drive_backward(1.5, speed = 100)
     await robot.drive_backward(1)
     await motor.run_for_time(LEFT_ATTACHMENT, 1000, -110)
@@ -96,7 +96,7 @@ async def buzzcut(robot):
     await robot.turn_right(48)
     await robot.drive_forward(62)
     await robot.turn_left(48)
-    await robot.drive_forward(2.5)
+    await robot.drive_forward(1.5)
     await motor.run_for_time(RIGHT_ATTACHMENT, 500, -1100)
     await robot.drive_backward(10)
     await robot.turn_right(49)
@@ -129,12 +129,12 @@ async def keystone(robot):
     await motor.run_for_time(LEFT_ATTACHMENT, 200, 110)
     await robot.drive_forward(8)
     await motor.run_for_time(LEFT_ATTACHMENT, 2000, 110)
-    await robot.drive_backward(12)
+    await robot.drive_backward(12) #12
     await robot.turn_left(70)
     await robot.drive_forward(38)
     await robot.turn_right(120)
     await robot.drive_forward(23, speed = 20)
-    await robot.drive_backward(20)
+    await robot.drive_backward(22) #20
     motor.run_for_time(LEFT_ATTACHMENT, 2000, -110)
     await robot.turn_left(98)
     await robot.drive_backward(20)
