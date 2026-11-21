@@ -25,7 +25,7 @@ async def main():
         await newmain(robot)
     else:
         # Make sure this matches the program number in the bottom right.
-        PROGRAM_NUMBER = 4
+        PROGRAM_NUMBER = 3
         await runsel(PROGRAM_NUMBER, robot)
 
 async def runsel(program_number, robot):
@@ -33,12 +33,12 @@ async def runsel(program_number, robot):
         await tractor(robot)
     elif program_number == 2:
         await keystone(robot)
-    elif program_number == 4:
-        await lidar_scan(robot)
     elif program_number == 3:
         await buzzcut(robot)
+    elif program_number == 4:
+        await lidar_scan(robot)
     elif program_number == 5:
-        await popping_seeds_backup(robot)
+        await popping_seeds(robot)
 
 async def newmain(robot):
     sel = 1
@@ -82,22 +82,26 @@ async def lidar_scan(robot):
     #await robot.drive_forward(66)
 
 async def tractor(robot):
-    await motor.run_for_time(LEFT_ATTACHMENT, 200, 700)
-    await robot.drive_forward(40, speed = 1100) #42
+    #await motor.run_for_time(LEFT_ATTACHMENT, 200, 700)
+    await robot.drive_forward(50, speed = 1100) #42
     #await robot.drive_backward(1.5, speed = 100)
-    await robot.drive_backward(1)
-    await motor.run_for_time(LEFT_ATTACHMENT, 1000, -110)
+    #await robot.drive_backward(1)
+    #await motor.run_for_time(LEFT_ATTACHMENT, 1000, -110)
+    #await runloop.sleep_ms(1000)
+    #await motor.run_for_time(LEFT_ATTACHMENT, 500, 200)
     await runloop.sleep_ms(1000)
-    await motor.run_for_time(LEFT_ATTACHMENT, 500, 200)
+    wait_4_button(button.LEFT)
     await robot.drive_backward(60)
 
 async def buzzcut(robot):
     await robot.drive_forward(29)
     await robot.turn_right(48)
     await robot.drive_forward(62)
-    await robot.turn_left(48)
-    await robot.drive_forward(1.5)
-    await motor.run_for_time(RIGHT_ATTACHMENT, 500, -1100)
+    await robot.turn_left(38)
+    await robot.drive_forward(10)
+    wait_4_button(button.LEFT)
+   # await motor.run_for_time(RIGHT_ATTACHMENT, 500, -1100)
+   # await robot.turn_right(15)
     await robot.drive_backward(10)
     await robot.turn_right(49)
     await robot.drive_backward(90)
@@ -110,6 +114,16 @@ async def forklift(robot):
     await robot.turn_left(50)
     await robot.drive_forward(1.5)
     await motor.run_for_time(RIGHT_ATTACHMENT, 1000, -700)
+
+async def popping_seeds(robot):
+    #await robot.drive_forward(1)
+    goal = motor.relative_position(RIGHT_ATTACHMENT) - 45
+    motor.run(RIGHT_ATTACHMENT, -1110)
+    motor.run(LEFT_ATTACHMENT, 1110)
+    while motor.relative_position(RIGHT_ATTACHMENT) > goal:
+        True
+    motor.stop(RIGHT_ATTACHMENT) 
+    motor.stop(LEFT_ATTACHMENT)
 
 async def keystone(robot):
     await robot.drive_forward(45)
