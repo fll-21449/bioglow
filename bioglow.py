@@ -25,7 +25,7 @@ async def main():
         await newmain(robot)
     else:
         # Make sure this matches the program number in the bottom right.
-        PROGRAM_NUMBER = 3
+        PROGRAM_NUMBER = 6
         await runsel(PROGRAM_NUMBER, robot)
 
 async def runsel(program_number, robot):
@@ -39,6 +39,8 @@ async def runsel(program_number, robot):
         await lidar_scan(robot)
     elif program_number == 5:
         await popping_seeds(robot)
+    elif program_number == 6:
+        await tree_elevator(robot)
 
 async def newmain(robot):
     sel = 1
@@ -124,6 +126,9 @@ async def popping_seeds(robot):
         True
     motor.stop(RIGHT_ATTACHMENT) 
     motor.stop(LEFT_ATTACHMENT)
+
+async def tree_elevator(robot):
+    await robot.drive_forward(50, speed = 105)
 
 async def keystone(robot):
     await robot.drive_forward(45)
