@@ -25,7 +25,7 @@ async def main():
         await newmain(robot)
     else:
         # Make sure this matches the program number in the bottom right.
-        PROGRAM_NUMBER = 6
+        PROGRAM_NUMBER = 1
         await runsel(PROGRAM_NUMBER, robot)
 
 async def runsel(program_number, robot):
@@ -41,6 +41,8 @@ async def runsel(program_number, robot):
         await popping_seeds(robot)
     elif program_number == 6:
         await tree_elevator(robot)
+    elif program_number==7:
+        await rocky(robot)
 
 async def newmain(robot):
     sel = 1
@@ -92,7 +94,10 @@ async def tractor(robot):
     #await runloop.sleep_ms(1000)
     #await motor.run_for_time(LEFT_ATTACHMENT, 500, 200)
     await runloop.sleep_ms(1000)
-    wait_4_button(button.LEFT)
+    await robot.drive_forward(5, speed = 1100)
+    await motor.run_for_time(LEFT_ATTACHMENT, 500, -110)
+    await motor.run_for_time(LEFT_ATTACHMENT, 500, 110)
+    await robot.drive_backward(6, speed = 10)
     await robot.drive_backward(60)
 
 async def buzzcut(robot):
@@ -164,6 +169,11 @@ async def keystone(robot):
     motor.run_for_time(LEFT_ATTACHMENT, 1000, 110)
     await robot.drive_forward(70)
     await robot.turn_left(30)
+    await robot.drive_forward(40)
+
+async def rocky(robot):
+    await robot.drive_backward (22, speed=40)
+    # wait_4_button(button.LEFT)
     await robot.drive_forward(40)
 
 def wait_4_button(b):
